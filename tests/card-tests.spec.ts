@@ -19,3 +19,8 @@ test.describe("Let's create a few cards", () => {
         await card.create(request);
     });
 });
+
+test('Get information about card', async ({ request }) => {
+    await card.get(request, process.env.CARD_ID as string);
+});
+

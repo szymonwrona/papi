@@ -4,7 +4,7 @@ import listJson from "../assets/list.json"
 
 export class ListAPI {
 
-    private readonly base_url = baseURLs.apiURL;
+    private readonly base_url = baseURLs.apiURL();
 
     async create(request: APIRequestContext, name = "test"){
         let url = `${this.base_url}/lists`;

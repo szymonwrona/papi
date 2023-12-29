@@ -6,7 +6,7 @@ import { updateBoard } from '../domain/updateBoard';
 
 export class BoardAPI{
 
-    private readonly base_url = baseURLs.apiURL;
+    private readonly base_url = baseURLs.apiURL();
     private readonly auth = authToken;
 
     async create(request: APIRequestContext, boardName: string){
