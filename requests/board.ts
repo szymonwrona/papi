@@ -1,7 +1,8 @@
-import { APIRequestContext, expect } from '@playwright/test';
+import { APIRequestContext, Page, expect } from '@playwright/test';
 import { baseURLs } from '../config/baseUrls';
 import { authToken } from '../config/authToken';
 import { updateBoard } from '../domain/updateBoard';
+import { getPerfMetrics } from '../performance/perf';
 
 
 export class BoardAPI{
@@ -9,14 +10,14 @@ export class BoardAPI{
     private readonly base_url = baseURLs.apiURL();
     private readonly auth = authToken;
 
-    async create(request: APIRequestContext, boardName: string){
+    async create(page: Page, request: APIRequestContext, boardName: string){
         let url = `${this.base_url}/boards/?name=${boardName}&${this.auth}`;
-        
-        console.log(url);
-        
+                
         let response = await request.post(url);
-
         const body = await response.json();
+
+        let metrics = await getPerfMetrics(page);
+        expect(metrics[0].duration).toBeLessThanOrEqual(1500);
 
         if(boardName !== "") {
             expect(response).toBeOK();

@@ -14,8 +14,8 @@ test('Update a board', async ({ request }) => {
 });
 
 
-test('400 error when creating board with empty name', async ({ request }) => {
-    await board.create(request, "");
+test('400 error when creating board with empty name', async ({ page, request }) => {
+    await board.create(page, request, "");
 });
 
 

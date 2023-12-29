@@ -5,18 +5,18 @@ let card = new CardAPI();
 
 test.describe("Let's create a few cards", () => {
 
-    test('first request', async ({ request }) => {
-        await card.create(request);
+    test('first request', async ({ page, request }) => {
+        await card.create(page, request);
     });
 
 
-    test('second request', async ({ request }) => {
-        await card.create(request);
+    test('second request', async ({ page, request }) => {
+        await card.create(page, request);
     });
 
 
-    test('third request', async ({ request }) => {
-        await card.create(request);
+    test('third request', async ({ page, request }) => {
+        await card.create(page, request);
     });
 });
 

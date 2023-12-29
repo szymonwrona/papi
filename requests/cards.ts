@@ -1,15 +1,15 @@
-import { APIRequestContext, expect } from '@playwright/test';
+import { APIRequestContext, expect, Page } from '@playwright/test';
 import { baseURLs } from '../config/baseUrls';
-import { updateBoard } from '../domain/updateBoard';
 import { generateRandomString } from '../generators/randomString';
+import { getPerfMetrics } from '../performance/perf';
 
 
 export class CardAPI {
 
     private readonly base_url = baseURLs.apiURL();
-    cardsId: string[] = [];
+    static cardsId: string[] = new Array();
 
-    async create(request: APIRequestContext){
+    async create(page: Page, request: APIRequestContext){
         let url = `${this.base_url}/cards`;
         let json = {
             name : generateRandomString("Card "),
@@ -21,8 +21,11 @@ export class CardAPI {
         let response = await request.post(url, {data: json});
         expect(response).toBeOK();
         const body = await response.json();
+
+        let metrics = await getPerfMetrics(page);
+        expect(metrics[0].duration).toBeLessThanOrEqual(1500);
         
-        this.cardsId.push(body.id);
+        CardAPI.cardsId.push(body.id);
         return body.id;
     }
 
@@ -39,7 +42,7 @@ export class CardAPI {
         await expect(response).toBeOK();
     }
 
-    async delete(request: APIRequestContext, cardId: string){
+    async delete(page: Page, request: APIRequestContext, cardId: string){
         let url = `${this.base_url}/cards/${cardId}`;
         let json = {
             key: process.env.API_KEY as string,
@@ -48,6 +51,9 @@ export class CardAPI {
 
         let response = await request.delete(url, {data: json});
         await expect(response).toBeOK();
+        
+        let metrics = await getPerfMetrics(page);
+        expect(metrics[0].duration).toBeLessThanOrEqual(1500);
     }
 
 }

@@ -5,21 +5,21 @@ import { ListAPI } from '../../requests/list';
 import { CardAPI } from '../../requests/cards';
 
 
-setup('setup: add board', async ({ request }) => {
+setup('setup: add board', async ({ page, request }) => {
     await setup.step(`create list during setup`, async () => {
         let board = new BoardAPI();
         process.env.BOARD_NAME = generateRandomString("board");
-        await board.create(request, process.env.BOARD_NAME);
+        await board.create(page, request, process.env.BOARD_NAME);
     });
 
     await setup.step(`create list during setup`, async () => {
         let list = new ListAPI();
-        await list.create(request);
+        await list.create(page, request);
     });
 
     await setup.step(`create first card during setup`, async () => {
         let card = new CardAPI();
-        let cardId = await card.create(request);
+        let cardId = await card.create(page, request);
         process.env.CARD_ID = cardId;
         console.log(`Card with id ${cardId} created`)
     });
