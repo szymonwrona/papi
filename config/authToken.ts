@@ -1,0 +1,1 @@
+export const authToken = `key=${process.env.API_KEY}&token=${process.env.API_TOKEN}` as string;
