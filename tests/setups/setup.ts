@@ -6,13 +6,13 @@ import { CardAPI } from '../../requests/cards';
 
 
 setup('setup: add board', async ({ request }) => {
-    await setup.step(`create list during setup`, async () => {
+    await setup.step(`create a board during setup`, async () => {
         let board = new BoardAPI();
         process.env.BOARD_NAME = generateRandomString("board");
         await board.create(request, process.env.BOARD_NAME);
     });
 
-    await setup.step(`create list during setup`, async () => {
+    await setup.step(`create a list during setup`, async () => {
         let list = new ListAPI();
         await list.create(request);
     });

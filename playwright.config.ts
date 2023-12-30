@@ -18,23 +18,28 @@ export default defineConfig({
   use: {
     trace: 'on-first-retry',
     ignoreHTTPSErrors: true,
+
+    // extraHTTPHeaders: {
+    //   'key': process.env.API_KEY as string,
+    //   'token': process.env.API_TOKEN as string,
+    // },
   },
 
   projects: [
     {
-      name: 'Create board', 
+      name: 'Setup before tests',
       testMatch: /...setup.ts/
     },
   
     {
-      name: 'Delete board',
+      name: 'Cleanup after tests',
       testMatch: /...delete-board.ts/
     },
 
     {
       name: 'api',
-      dependencies: ['Create board'],
-      teardown: 'Delete board'
+      dependencies: ['Setup before tests'],
+      teardown: 'Cleanup after tests'
     },
   ]
 });

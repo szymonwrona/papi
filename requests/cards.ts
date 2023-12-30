@@ -7,7 +7,7 @@ import { generateRandomString } from '../generators/randomString';
 export class CardAPI {
 
     private readonly base_url = baseURLs.apiURL();
-    cardsId: string[] = [];
+    public static cardsId: string[] = new Array();
 
     async create(request: APIRequestContext){
         let url = `${this.base_url}/cards`;
@@ -22,7 +22,8 @@ export class CardAPI {
         expect(response).toBeOK();
         const body = await response.json();
         
-        this.cardsId.push(body.id);
+        // CardAPI.cardsId.push(body.id);
+        // console.log(CardAPI.cardsId);
         return body.id;
     }
 
