@@ -57,7 +57,6 @@ export class BoardAPI{
 
     }
 
-
     async getAsNotAuthorizedUser(request: APIRequestContext, boardId: string, key = process.env.API_KEY){
         let url = `${this.base_url}/boards/${boardId}`;
 

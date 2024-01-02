@@ -7,7 +7,7 @@ import { getPerfMetrics } from '../performance/perf';
 export class CardAPI {
 
     private readonly base_url = baseURLs.apiURL();
-    static cardsId: string[] = new Array();
+    public static cardsId: string[] = new Array();
 
     async create(page: Page, request: APIRequestContext){
         let url = `${this.base_url}/cards`;
@@ -21,11 +21,13 @@ export class CardAPI {
         let response = await request.post(url, {data: json});
         expect(response).toBeOK();
         const body = await response.json();
+        
+        CardAPI.cardsId.push(body.id);
+
 
         let metrics = await getPerfMetrics(page);
         expect(metrics[0].duration).toBeLessThanOrEqual(1500);
-        
-        CardAPI.cardsId.push(body.id);
+
         return body.id;
     }
 

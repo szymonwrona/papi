@@ -12,7 +12,7 @@ setup('setup: add board', async ({ page, request }) => {
         await board.create(page, request, process.env.BOARD_NAME);
     });
 
-    await setup.step(`create list during setup`, async () => {
+    await setup.step(`create a list during setup`, async () => {
         let list = new ListAPI();
         await list.create(page, request);
     });
